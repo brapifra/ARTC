@@ -1,4 +1,5 @@
 const peer = new RTCPeerConnection();
+const audio = document.querySelector("audio");
 let token;
 
 const ws = new WebSocket("ws://192.168.0.15:2222");
@@ -90,13 +91,11 @@ function receiveStream(offer) {
   };
 
   peer.ontrack = track => {
-    const audio = document.querySelector("audio");
     audio.srcObject = track.streams[0];
     audio.play();
     console.log("Audio stream ready!");
   };
   peer.onaddstream = e => {
-    const audio = document.querySelector("audio");
     audio.srcObject = e.stream;
     audio.play();
     console.log("Audio stream ready!");
@@ -108,6 +107,7 @@ function receiveStream(offer) {
       peer
         .createAnswer()
         .then(function(offer) {
+          audio.style.visibility = "visible";
           return peer.setLocalDescription(new RTCSessionDescription(offer));
         })
         .catch(e => console.error(e));

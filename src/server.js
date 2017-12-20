@@ -1,4 +1,19 @@
 const WebSocket = require("ws");
+const express = require("express");
+const app = express();
+
+/*
+ * WebServer
+ */
+app.use(express.static(__dirname + "/public"));
+
+app.listen(3000, "0.0.0.0", function() {
+  console.log("WebServer listening on port 3000!");
+});
+
+/*
+ * WebSocket server
+ */
 
 const wss = new WebSocket.Server({ port: 2222, host: "0.0.0.0" }, () => {
   console.log("WebSocket server listening on port 2222");
@@ -7,8 +22,8 @@ const wss = new WebSocket.Server({ port: 2222, host: "0.0.0.0" }, () => {
 const offers = new Map();
 
 function generateUID() {
-  var firstPart = (Math.random() * 46656) | 0;
-  var secondPart = (Math.random() * 46656) | 0;
+  let firstPart = (Math.random() * 46656) | 0;
+  let secondPart = (Math.random() * 46656) | 0;
   firstPart = ("000" + firstPart.toString(36)).slice(-3);
   secondPart = ("000" + secondPart.toString(36)).slice(-3);
   return firstPart + secondPart;
