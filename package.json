@@ -1,4 +1,7 @@
 {
+  "scripts": {
+    "start": "node src/server/server.js"
+  },
   "dependencies": {
     "ws": "^3.3.2"
   }
